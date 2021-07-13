@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.GuestbookDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestbookVo;
 
 @WebServlet("/gbc")
@@ -31,8 +32,8 @@ public class GuestController extends HttpServlet {
 			// list DB데이터 어트리뷰트
 			request.setAttribute("gList", gbDao.getList());
 
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/addList.jsp");
-			rd.forward(request, response);
+			// FORWARD
+			WebUtil.forward(request, response, "WEB-INF/addList.jsp");
 
 		} else if ("add".equals(page)) {
 			// 파라미터 input값 읽기
@@ -42,11 +43,12 @@ public class GuestController extends HttpServlet {
 
 			gbDao.insert(new GuestbookVo(name, pw, ct));
 
-			response.sendRedirect("/guestbook2/gbc?page=addList");
+			// sendRedirect
+			WebUtil.sendRedirect(response, "/guestbook2/gbc?page=addList");
 
 		} else if ("dForm".equals(page)) {
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/dForm.jsp");
-			rd.forward(request, response);
+			// FORWARD
+			WebUtil.forward(request, response, "WEB-INF/dForm.jsp");
 
 		} else if ("delete".equals(page)) {
 			// 파라미터값 읽기
@@ -55,7 +57,8 @@ public class GuestController extends HttpServlet {
 
 			gbDao.delete(new GuestbookVo(no, pw));
 
-			response.sendRedirect("/guestbook2/gbc?page=addList");
+			// REDIRECT
+			WebUtil.sendRedirect(response, "/guestbook2/gbc?page=addList");
 
 		}
 
