@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<!-- JAVA -->
+<%--
 <%@ page import="com.javaex.vo.GuestbookVo" %>
 <%@ page import="java.util.List"%>
 
 <%
-
 List<GuestbookVo> gList = (List<GuestbookVo>) request.getAttribute("gList");
-
 %>
+--%>
+
+<!-- JSTL -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -38,26 +42,22 @@ List<GuestbookVo> gList = (List<GuestbookVo>) request.getAttribute("gList");
 	
 	<br>
 
-	<%
-	for (GuestbookVo g : gList) {
-	%>
+	<c:forEach items="${ requestScope.gList }" var="g" varStatus="status">
 	
 	<table border="1" width="500">
 		<tr>
-			<td><%=g.getNo()%></td>
-			<td><%=g.getName()%></td>
-			<td><%=g.getDate()%></td>
-			<td><a href="/guestbook2/gbc?page=dForm&no=<%=g.getNo()%>">삭제</a></td>
+			<td>${ g.no }</td>
+			<td>${ g.name }</td>
+			<td>${ g.date }</td>
+			<td><a href="/guestbook2/gbc?page=dForm&no=${ g.no }">삭제</a></td>
 		</tr>
 		<tr>
-			<td colspan="4"><%=g.getContent()%></td>
+			<td colspan="4">${ g.content }</td>
 		</tr>
 	</table>
 	
 	<br>
 	
-	<%
-	}
-	%>
+	</c:forEach>
 </body>
 </html>
